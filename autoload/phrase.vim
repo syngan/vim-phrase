@@ -215,6 +215,9 @@ endfunction
 
 function! phrase#all(...) "{{{1
   let files =  s:phrase.find('*')
+  if type(files) != type([])
+    return []
+  endif
   let R = []
   for file in files
     call extend(R, s:phrase._parse(file, &filetype))
