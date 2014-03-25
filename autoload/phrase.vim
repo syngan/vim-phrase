@@ -182,7 +182,9 @@ function! phrase#edit(...) "{{{1
     call s:phrase.edit(file)
   catch /phrase\.vim/
     echom v:exception
+    return -1
   endtry
+  return 0
 endfunction
 
 
@@ -192,7 +194,9 @@ function! phrase#create(...) range "{{{1
     let phrase = s:phrase.prepare(body, &filetype)
     call s:ensure(!empty(phrase), 'empty phrase')
 
-    call call('phrase#edit', a:000)
+    if call('phrase#edit', a:000)
+	    return
+    endif
 
     " commentout need to be delayed to use phrasefile's &filetype
     " for when gathering phrase from other &filetype's file.
